@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/s/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/s/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 08028c6f8e34a032ff14757a38424770abb8662fb2818985aeea0d9bc13a7d83
 
 build:
@@ -14,19 +14,21 @@ build:
   script: {{ PYTHON }} -m pip install . --no-deps -vv
   entry_points:
     - snakeviz = snakeviz.cli:main
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
     - setuptools
     - tornado >=2.0
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - tornado >=2.0
 
 test:
+  requires:
+    - python {{ python_min }}
   commands:
     - snakeviz -h
   imports:
